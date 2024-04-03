@@ -1,15 +1,19 @@
 # GenMenuX
 GenMenuX is a menu extender for Visual FoxPro.
 
-To install GENMENUX, specify it in your CONFIG.FP or with the System Variable
-_GENMENU as in _GENMENU='GENMENUX.PRG'.  Be sure to include the full path
-where you store GENMENUX.PRG.  DO NOT OVERRIDE YOUR GENMENU.PRG WITH GENMENUX.PRG
+To install GENMENUX, specify it in your CONFIG.FP or with the System Variable _GENMENU as in _GENMENU='GENMENUX.PRG'.  Be sure to include the full path where you store GENMENUX.PRG.
+
+DO NOT OVERRIDE YOUR GENMENU.PRG WITH GENMENUX.PRG
 
 This program is based on the concept behind GENSCRNX by Ken Levy of JPL and the initial program by Steven Black.  The idea behind the "X" series of generators is that there are times when FoxPro does not provide everything required in the Power Tools.  The "X" series provides additional functionality that can add incredible power to these tools.
 GENMENUX was originally conceived by Steven Black to provide automatic menu translation for his INTL GENSCRNX Driver, which creates truly international-ready applications.  Additional modifications were made to make GENMENUX a more powerful and generic tool. 
+
 GENMENUX 3.0 supports both Visual FoxPro 3.0 and FoxPro 2.x for all platforms.
+
 GENSCRNX was designed by Ken Levy and provides major extensions to the FoxPro screen builder in the same way that GENMENUX extends the menu builder.
+
 Since the most common complaint I've heard about the Menu Builder is that it forces the developer to use FoxPro's format of menus : shadows, placement, etc.  GENMENUX attempts to provide power back into the developer's hands.
+
 It enhances the FoxPro Menu Builder with the following features :
 *	ability to control default menu positioning, colours and actions without manually changing the MPR file.
 *	ability to remove menu pads based on logical conditions instead of using SKIP FOR.
@@ -17,9 +21,10 @@ It enhances the FoxPro Menu Builder with the following features :
 *	ability to automatically add hot keys to menu pads
 *	ability to call menu "drivers" at various points in the Menu Generation process.
 *	ability to define Menu Templates that contain standard menu objects that can be inserted at any time into an existing menu.
-Technically, these generators copy a screen or menu and make modifications to the copy prior to building. This way, the original screen remains the same.  For more information on GENSCRNX and the entire concept behind the "X" series, see the documentation for GENSCRNX.
-As with GENSCRNX, GENMENUX has been placed in the Public Domain.
 
+Technically, these generators copy a screen or menu and make modifications to the copy prior to building. This way, the original screen remains the same.  For more information on GENSCRNX and the entire concept behind the "X" series, see the documentation for GENSCRNX.
+
+As with GENSCRNX, GENMENUX has been placed in the Public Domain.
 
 ### GENMENUX Quick Directive List
 
