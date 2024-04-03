@@ -20,6 +20,107 @@ It enhances the FoxPro Menu Builder with the following features :
 Technically, these generators copy a screen or menu and make modifications to the copy prior to building. This way, the original screen remains the same.  For more information on GENSCRNX and the entire concept behind the "X" series, see the documentation for GENSCRNX.
 As with GENSCRNX, GENMENUX has been placed in the Public Domain.
 
+
+### GENMENUX Quick Directive List
+
+CONFIG.FP Directives - all CONFIG.FP directives are preceded with a _
+	
+* AUTOACT	Automatically Activates the menu after creating it.
+* AUTOHOT	Automatically adds Hot keys to top menu bar without labels. (ALT+ only)
+* AUTOPOS	Allows the developer to place the menu on a line when it is being compiled.
+* AUTORUN	Automatically runs the menu upon completion.
+* BASEHDR	Identifies a standard MNX header file.
+* FOUNDATION	Automatically creates a FOUNDATION READ at the bottom of the menu file.
+* FOXMNX	Defines the Menu Template File.
+* GENMENUX	Runs driver specified instead of standard GENMENU.
+* HIDE	Hides the Menu while the MPR file is being run so menu pads won't distract the user.
+* MNXDRV1-5	Identifies Driver x for the MNX file
+* MPRDRV1-2	Identifies MPR drive for the MPR object file
+* NOXTHERM	Removes the GENMENUX Extended Thermometer in favour of the traditional FoxPro.
+* REFPRG	Identifies Refresh Program that GENMENUX will create to help in the refreshing of conditional CASE and ARRAY menus.
+* SYSPOP	Wraps all procedures with PUSH MENU _MSYSMENU ,POP MENU _MSYSMENU statements to preserve menu settings before a procedure is called.
+	
+#### Setup/Menu Procedure Directives
+
+All setup directives are preceded with a *:
+* {{}}	Identical functionality to {{}} in GENSCRNX.
+* AUTOACT	Automatically Activates the menu after creating it.
+* AUTOHOT	Automatically adds Hot keys to top menu bar without labels. (ALT+ only)
+* AUTOPOS	Allows the developer to place the menu on a line when it is being compiled.
+* AUTORUN	Automatically runs the menu upon completion.
+* AUTO_VER	Sets up menu to be a version control menu
+* BARHOT	Automatically adds CTRL hot keys for a menu item or submenu.
+* DEFCOMMAND_ALWAYS
+* DEFCOMMAND_INCLUDE	Replaces any code for Command bars with specified command. ALWAYS replaces every command bar. INCLUDE only updates any empty ones.
+* DEFLIB	Defines the Default Library to be used when defining menu template objects.
+* FOUNDATION	Automatically creates a FOUNDATION READ at the bottom of the menu file.
+* FOXMNX	Defines the Menu Template File.
+* HIDE	Hides the Menu while the MPR file is being run so menu pads won't distract the user.
+* INCLIB	Defines the Default Library to be used when retrieving menu template objects.
+* INSSCX	Inserts a DO .MPR call within a screen file. Also allows you to call the menu from within a MODAL screen and preserve the original menu settings.
+* LINE	Places the menu at line specified. This should be a numeric value. Be warned under Windows!
+* LOCATION	Allows you to set the location of the menu in relation to the current menu (REPLACE, APPEND, BEFORE or AFTER) instead of having to identify it under Menu Options.
+* MENUCOLOR	Adds the COLOR clause setting to the DEFINE MENU statement if one is present in the MPR file.
+* MENUNAME	Renames the default _MSYSMENU menu name in the MPR file to whatever is specified. This does not have to be in quotes. If it is, the quotes are stripped from the word.
+* MNXDRV0-5	Identifies Driver x for the MNX file
+* MPRDRV1-2	Identifies MPR drive for the MPR object file
+* NOACT	Removes the statement ACTIVATE MENU _MSYSMENU from the MPR file.
+* NOAUTO	Removes the statement SET SYSMENU AUTOMATIC from the MPR file.
+* NOBAR	Removes the BAR statement. Usually only required if renaming menu. Be warned under Windows!
+* NOGEN	Does not generate the MPR file
+* NOLOC	Removes the LOCFILE statement from the MPR file.
+* NOMARGIN	Removes the MARGIN clause from the MPR file.
+* NOSHADOW	Removes the SHADOW clause from the MPR file.
+* NOXGEN	Does not process any GENMENUX directives.
+* NOXTHERM	Removes the GENMENUX Extended Thermometer in favour of the traditional FoxPro.
+* PADCOLOR	Changes the Default Menu Pad color from color Scheme 4 to whatever number is specified. No quotes please!
+* POPCOLOR	Changes the Default Menu Popup color from color Scheme 4 to whatever number is specified. No quotes please!
+* REFPRG	Identifies Refresh Program that GENMENUX will create to help in the refreshing of conditional CASE and ARRAY menus.
+* SELECTBAR	Changes the ON BAR statements to ON SELECTION BAR.
+* SELECTPAD	Changes the ON PAD statements to ON SELECTION PAD.
+* SKIP_AUTO	Automatically calls the program specified by *:SKIP_REDIRECT in the Cleanup snippet of the menu.
+* SKIP_REDIRECT	Moves all of the SKIP statements into the specified program.
+* SYSDEFAULT	Makes the Menu become the FoxPro default by adding the line SET SYSMENU NOSAVE to the bottom of the MPR file.
+* SYSPOP	Wraps all procedures with PUSH MENU _MSYSMENU ,POP MENU _MSYSMENU statements to preserve menu settings before a procedure is called.
+* VERTICAL	Makes a menu orientation vertical instead of horizontal starting at a particular location.
+* WINDOW	Allows you to place a menu within a window and define the window within the MPR with specific window definition clauses.
+
+
+#### Comment Directives
+All Comment directives are preceded with a *:
+	
+* {{}}	Identical functionality to {{}} in GENSCRNX.
+* ARRAY	Makes a menu popup definable by an array instead of within the MPR file. Good for dynamic menus.
+* BARHOT	Automatically adds CTRL hot keys for a menu item or submenu.
+* CASE	Adds or removes a menu bar when a general condition is not met.
+* CLAUSE	Identifies any additional settings for a DEFINE BAR statement.
+* COLOR	Allows you to designate a Color Pair setting for a particular menu item. Under Windows and Macintosh, allows you to identify color by name.
+* COLORSET	Allows a specific color scheme setting for a particular menu item.
+* DEFOBJ	Defines the current menu pad/procedure as a menu object in the menu template file.
+* DEFPOPIF	Makes the definition of a menu popup conditional if the menu popup already exists. This has no effect on the options of the popup but will speed up the running of the MPR file.
+* DELETE	Removes menu pad prior to calling GENMENU
+* DELOBJ	Removes menu pad prior to calling GENMENU but AFTER initial GENMENUX directives has processed.
+* FONT	Identifies a FONT setting for the menu bar.
+* GENIF	Removes a menu pad or bar from the MNX file during compilation if condition is not met.
+* IF	RELEASES a menu PAD or BAR if condition is not met
+* IGNORE	Tells GENMENUX to ignore the menu or the pad for GENMENUX processing.
+* INSOBJ	Inserts a menu object from a menu template file.
+* KEYLAB	Identifies a variable to replace the KEY LABEL setting.
+* MESSAGE	Adds a message clause to the menu definition. This replaces the FPW's message clause. The message must be enclosed in quotes unless it is a variable.
+* PADNAME	Identifies a particular name to a menu pad without having to go into Menu Options.
+* PADPOS	Defines the menu pad at a particular row and column.
+* POPCOMMAND	Adds the line ON SELECTION POPUP for each popup using POPFILES or POPFIELD, the expression must be a valid FoxPro command. Quotes ARE NOT STRIPPED from the expression.
+* POPFIELD	Allows for a popup of fields matching the file spec matching the expression. Quotes are not needed and if used, will return the text instead of the field.
+* POPFILES	Allows for a popup of files matching the file spec matching the expression. Quotes are ignored in the expression as per standard FoxPro behaviour
+* POPNAME	Identifies a particular name to a menu popup without having to go into Menu Options.
+* POPPOS	Defines the menu popup at a particular row and column.
+* POPPRECOMMAND	Identifies a particular command to be run before a popup is defined. For use with the POPFIELD and POPFILES directives only.
+* POPTITLE	Identifies a particular title for a menu popup.
+* PREDEF	Places a command BEFORE the DEFINE BAR statement occurs.
+* SYSPOP	Wraps all procedures with PUSH MENU _MSYSMENU ,POP MENU _MSYSMENU statements to preserve menu settings before a procedure is called.
+* TRNTXT	Translates Text within a procedure file.
+
+
 Calling GENMENUX directives
 
 GENMENUX directives may be called in four different locations :
@@ -47,7 +148,9 @@ To reduce this from happening, GENMENUX reorders the menu after processing the m
 Technical Note - Menu Templates
 
 With the release of version 1.1, GENMENUX offers the concept of Menu Templates or Libraries, similar to the screen libraries offered with GENSCRNX.
-GENMENUX Directives
+
+### GENMENUX Directives
+
 (Some directives may be identified in more than one place.  At the end of each directive description, these places are identified. The directives are ordered by where they may be called.)
 
 ### GENMENUX Drivers
@@ -654,113 +757,10 @@ This gives an idea of when specific drivers are called so you can better determi
 20.	If AUTORUN, run MPR file.
 
 
-COPYRIGHT NOTICE
-Compressed file: GENMENUX.ZIP
-System: GenMenuX
-Author: Andrew Ross MacNeill
-Copyright: None (Public Domain)
-All source code and documentation contained in GENMENUX.ZIP has been placed into the public domain.  You may use, modify, copy, distribute, and demonstrate any source code, example programs, or documentation contained in GENMENUX.ZIP freely without copyright protection.  All files contained in GENMENUX.ZIP are provided 'as is' without warranty of any kind.  In no event shall its authors, contributors, or distributors be liable for any damages.
-COMMENTS/SUGGESTIONS/PROBLEMS/QUESTIONS
-Please use CompuServe's FoxForum (section 3rd Party Products) directed to:
-Andrew Ross MacNeill 76100,2725
+All source code and documentation related to GENMENUX has been placed into the public domain.  You may use, modify, copy, distribute, and demonstrate any source code, example programs, or documentation contained in GENMENUX.ZIP freely without copyright protection.  All files contained in GENMENUX.ZIP are provided 'as is' without warranty of any kind.  In no event shall its authors, contributors, or distributors be liable for any damages.
+
+### COMMENTS/SUGGESTIONS/PROBLEMS/QUESTIONS
+Please reference comments here or email 
+Andrew Ross MacNeill - andrew @ aksel.com
 
  
-GENMENUX Quick Directive List
-
-CONFIG.FP Directives - all CONFIG.FP directives are preceded with a _
-	
-AUTOACT	Automatically Activates the menu after creating it.
-AUTOHOT	Automatically adds Hot keys to top menu bar without labels. (ALT+ only)
-AUTOPOS	Allows the developer to place the menu on a line when it is being compiled.
-AUTORUN	Automatically runs the menu upon completion.
-BASEHDR	Identifies a standard MNX header file.
-FOUNDATION	Automatically creates a FOUNDATION READ at the bottom of the menu file.
-FOXMNX	Defines the Menu Template File.
-GENMENUX	Runs driver specified instead of standard GENMENU.
-HIDE	Hides the Menu while the MPR file is being run so menu pads won't distract the user.
-MNXDRV1-5	Identifies Driver x for the MNX file
-MPRDRV1-2	Identifies MPR drive for the MPR object file
-NOXTHERM	Removes the GENMENUX Extended Thermometer in favour of the traditional FoxPro.
-REFPRG	Identifies Refresh Program that GENMENUX will create to help in the refreshing of conditional CASE and ARRAY menus.
-SYSPOP	Wraps all procedures with PUSH MENU _MSYSMENU ,POP MENU _MSYSMENU statements to preserve menu settings before a procedure is called.
-	
-#### Setup/Menu Procedure Directives
-
-All setup directives are preceded with a *:
-* {{}}	Identical functionality to {{}} in GENSCRNX.
-* AUTOACT	Automatically Activates the menu after creating it.
-* AUTOHOT	Automatically adds Hot keys to top menu bar without labels. (ALT+ only)
-* AUTOPOS	Allows the developer to place the menu on a line when it is being compiled.
-* AUTORUN	Automatically runs the menu upon completion.
-* AUTO_VER	Sets up menu to be a version control menu
-* BARHOT	Automatically adds CTRL hot keys for a menu item or submenu.
-* DEFCOMMAND_ALWAYS
-* DEFCOMMAND_INCLUDE	Replaces any code for Command bars with specified command. ALWAYS replaces every command bar. INCLUDE only updates any empty ones.
-* DEFLIB	Defines the Default Library to be used when defining menu template objects.
-* FOUNDATION	Automatically creates a FOUNDATION READ at the bottom of the menu file.
-* FOXMNX	Defines the Menu Template File.
-* HIDE	Hides the Menu while the MPR file is being run so menu pads won't distract the user.
-* INCLIB	Defines the Default Library to be used when retrieving menu template objects.
-* INSSCX	Inserts a DO .MPR call within a screen file. Also allows you to call the menu from within a MODAL screen and preserve the original menu settings.
-* LINE	Places the menu at line specified. This should be a numeric value. Be warned under Windows!
-* LOCATION	Allows you to set the location of the menu in relation to the current menu (REPLACE, APPEND, BEFORE or AFTER) instead of having to identify it under Menu Options.
-* MENUCOLOR	Adds the COLOR clause setting to the DEFINE MENU statement if one is present in the MPR file.
-* MENUNAME	Renames the default _MSYSMENU menu name in the MPR file to whatever is specified. This does not have to be in quotes. If it is, the quotes are stripped from the word.
-* MNXDRV0-5	Identifies Driver x for the MNX file
-* MPRDRV1-2	Identifies MPR drive for the MPR object file
-* NOACT	Removes the statement ACTIVATE MENU _MSYSMENU from the MPR file.
-* NOAUTO	Removes the statement SET SYSMENU AUTOMATIC from the MPR file.
-* NOBAR	Removes the BAR statement. Usually only required if renaming menu. Be warned under Windows!
-* NOGEN	Does not generate the MPR file
-* NOLOC	Removes the LOCFILE statement from the MPR file.
-* NOMARGIN	Removes the MARGIN clause from the MPR file.
-* NOSHADOW	Removes the SHADOW clause from the MPR file.
-* NOXGEN	Does not process any GENMENUX directives.
-* NOXTHERM	Removes the GENMENUX Extended Thermometer in favour of the traditional FoxPro.
-* PADCOLOR	Changes the Default Menu Pad color from color Scheme 4 to whatever number is specified. No quotes please!
-* POPCOLOR	Changes the Default Menu Popup color from color Scheme 4 to whatever number is specified. No quotes please!
-* REFPRG	Identifies Refresh Program that GENMENUX will create to help in the refreshing of conditional CASE and ARRAY menus.
-* SELECTBAR	Changes the ON BAR statements to ON SELECTION BAR.
-* SELECTPAD	Changes the ON PAD statements to ON SELECTION PAD.
-* SKIP_AUTO	Automatically calls the program specified by *:SKIP_REDIRECT in the Cleanup snippet of the menu.
-* SKIP_REDIRECT	Moves all of the SKIP statements into the specified program.
-* SYSDEFAULT	Makes the Menu become the FoxPro default by adding the line SET SYSMENU NOSAVE to the bottom of the MPR file.
-* SYSPOP	Wraps all procedures with PUSH MENU _MSYSMENU ,POP MENU _MSYSMENU statements to preserve menu settings before a procedure is called.
-* VERTICAL	Makes a menu orientation vertical instead of horizontal starting at a particular location.
-* WINDOW	Allows you to place a menu within a window and define the window within the MPR with specific window definition clauses.
-
-
-#### Comment Directives
-All Comment directives are preceded with a *:
-	
-* {{}}	Identical functionality to {{}} in GENSCRNX.
-* ARRAY	Makes a menu popup definable by an array instead of within the MPR file. Good for dynamic menus.
-* BARHOT	Automatically adds CTRL hot keys for a menu item or submenu.
-* CASE	Adds or removes a menu bar when a general condition is not met.
-* CLAUSE	Identifies any additional settings for a DEFINE BAR statement.
-* COLOR	Allows you to designate a Color Pair setting for a particular menu item. Under Windows and Macintosh, allows you to identify color by name.
-* COLORSET	Allows a specific color scheme setting for a particular menu item.
-* DEFOBJ	Defines the current menu pad/procedure as a menu object in the menu template file.
-* DEFPOPIF	Makes the definition of a menu popup conditional if the menu popup already exists. This has no effect on the options of the popup but will speed up the running of the MPR file.
-* DELETE	Removes menu pad prior to calling GENMENU
-* DELOBJ	Removes menu pad prior to calling GENMENU but AFTER initial GENMENUX directives has processed.
-* FONT	Identifies a FONT setting for the menu bar.
-* GENIF	Removes a menu pad or bar from the MNX file during compilation if condition is not met.
-* IF	RELEASES a menu PAD or BAR if condition is not met
-* IGNORE	Tells GENMENUX to ignore the menu or the pad for GENMENUX processing.
-* INSOBJ	Inserts a menu object from a menu template file.
-* KEYLAB	Identifies a variable to replace the KEY LABEL setting.
-* MESSAGE	Adds a message clause to the menu definition. This replaces the FPW's message clause. The message must be enclosed in quotes unless it is a variable.
-* PADNAME	Identifies a particular name to a menu pad without having to go into Menu Options.
-* PADPOS	Defines the menu pad at a particular row and column.
-* POPCOMMAND	Adds the line ON SELECTION POPUP for each popup using POPFILES or POPFIELD, the expression must be a valid FoxPro command. Quotes ARE NOT STRIPPED from the expression.
-* POPFIELD	Allows for a popup of fields matching the file spec matching the expression. Quotes are not needed and if used, will return the text instead of the field.
-* POPFILES	Allows for a popup of files matching the file spec matching the expression. Quotes are ignored in the expression as per standard FoxPro behaviour
-* POPNAME	Identifies a particular name to a menu popup without having to go into Menu Options.
-* POPPOS	Defines the menu popup at a particular row and column.
-* POPPRECOMMAND	Identifies a particular command to be run before a popup is defined. For use with the POPFIELD and POPFILES directives only.
-* POPTITLE	Identifies a particular title for a menu popup.
-* PREDEF	Places a command BEFORE the DEFINE BAR statement occurs.
-* SYSPOP	Wraps all procedures with PUSH MENU _MSYSMENU ,POP MENU _MSYSMENU statements to preserve menu settings before a procedure is called.
-* TRNTXT	Translates Text within a procedure file.
-
