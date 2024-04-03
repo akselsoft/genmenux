@@ -59,17 +59,20 @@ You may call as many drivers as desired within the Setup or Procedure snippets. 
 
 #### *:MNXDRV0 <expr1>
 Calls a GENMENUX Driver that attaches itself to the user’s GENMENU temporarily. This allows the driver to contain modified GENMENU procedures that provide additional functionality where GENMENU does not. This driver should only contain procedure and function statements and should expect a clean (ie empty) environment when being called. 
+
 Called : Setup/Menu Procedure snippet
 
 #### *:MNXDRV1 <expr1> / _MNXDRV1
 
 Calls a GENMENUX Driver before Standard GENMENUX processing has been completed.  This driver must be a complete driver in the sense that when it starts, the menu MNX file is open and at the first record.
+
 Called : Setup/Menu Procedure snippet
 	CONFIG.FP
 
 #### *:MNXDRV2 <expr1> / _MNXDRV2
 
 Calls a GENMENUX Driver after Standard GENMENUX processing has been completed. This driver can be considered a Line driver i.e. it can simply be a one line command. It is processed through each record of the menu file from within a SCAN statement.
+
 Called : Setup/Menu Procedure snippet
 	CONFIG.FP
 
@@ -77,12 +80,14 @@ Called : Setup/Menu Procedure snippet
 
 Calls a GENMENUX Driver after Standard GENMENUX processing and Menu re-ordering has been completed.  This driver can be considered a Line driver i.e. it can simply be a one line command. It is processed through each record of the menu file from within a SCAN statement.
 DO NOT DELETE ANY RECORDS IN THE MNX File as your menu file will be corrupted. Use MNXDRV2 if you want to do that.
+
 Called : Setup/Menu Procedure snippet
 	CONFIG.FP
 
 #### *:MNXDRV4 <expr1> / _MNXDRV4
 
 Calls a GENMENUX Driver before the Standard GENMENU is Called. This driver must be a complete driver in the sense that when it starts, the menu MNX file is open and at the first record.
+
 Called : Setup/Menu Procedure snippet
 	CONFIG.FP
 
@@ -91,17 +96,20 @@ Called : Setup/Menu Procedure snippet
 Calls a GENMENUX Driver that completely REPLACES the standard FoxPro GENMENU.  This driver must be a complete driver in the sense that when it starts, the menu MNX file is open and at the first record.  Whatever gets created here should be placed in the MPR file.
 The MNXDRV5 driver is passed the same two parameters as the regular GENMENU.
 The MNXDRV5 directive is identical to the GENMENUX directive and will override the setting of the GENMENUX driver, if used.
+
 Called : Setup/Menu Procedure snippet
 	CONFIG.FP
 
 #### *:MPRDRV1 <expr1> / _MPRDRV1
 Calls a GENMENUX Driver that will update the SPR file within the temporary project file.  This driver must be a complete driver in the sense that when it starts, the just created MPR file is in the Memo field named OBJECT  A driver here might completely replace the MPR with a different program like a pre-created menu file.
+
 Called : Setup/Menu Procedure snippet
 	CONFIG.FP
 
 #### *:MPRDRV2 <expr1> / _MPRDRV2
 Calls a GENMENUX Driver that will update the SPR file within the temporary project file.  This driver must be a complete driver in the sense that when it starts, the just created MPR file is in the Memo field named OBJECT  A driver here might completely replace the MPR with a different program like a pre-created menu file.
 The MPRDRV2 driver is called as the very last item in GENMENUX before the removal of the temporary project files.  There is no additional GENMENUX processing except for directives that run the menu or another program after completion.
+
 Called : Setup/Menu Procedure snippet
 	CONFIG.FP
 
@@ -110,16 +118,19 @@ Starting with Version 1.1, GENMENUX allows a menu template or library to be crea
 
 #### *:FOXMNX <cFileName> / _FOXMNX
 In order for a menu library to exist, the library file must be created using the FOXMNX directive. This directive may define a library table in every application directory or it may reference a single one for different applications. The table created will have the identical structure to an MNX file with some additional fields that identify the library and objects within.
+
 Called : Setup/Menu Procedure snippet
 	CONFIG.FP
 
 #### *:DEFLIB <cLibrary>
 Since every object must belong to a library, DEFLIB allows you to define the library for an entire menu. This is useful if you create a single menu that contains all of your library objects and want to place each object into a single library.
+
 Called :	Setup/Menu Procedure snippet
 	CONFIG.FP
 
 #### *:DEFOBJ [<cLibrary>.]<cObject>
 To define a library object, place the DEFOBJ directive in the comment field for the menu pad, submenu or procedure to be defined. The object will be inserted into the FOXMNX table as belonging to the library specified by cLibrary. If cLibrary is not specified, then the library will be the one identified by the DEFLIB directive.
+
 Called :	Comment snippet
 
 	Example of How to Define Library Objects
@@ -152,11 +163,13 @@ To define the default library for referencing library objects, place the INCLIB 
 
 #### *:INSOBJ <cLibrary>.<cObject>
 To reference a library object and have it replace a menu option in a menu, place the INSOBJ directive in the comment field for the menu pad, submenu or procedure to be replaced. The object will be replaced by the object <cObject> from the FOXMNX table belonging to the library specified by cLibrary. If cLibrary is not specified, then the library will be the one identified by the INCLIB directive.
+
 Called :	Comment snippet
 
 ### GENMENUX General Directives
 #### *:AUTOACT / _AUTOACT
 AUTOACT will automatically Activate the menu in the Cleanup snippet. This is useful if you use the MENUNAME directive and do not place the ACTIVATE MENU clause in your code.
+
 Called : Setup/Menu Procedure snippet
 	CONFIG.FP
 First appeared : Version 1.1
@@ -165,15 +178,18 @@ First appeared : Version 1.1
 This directive will automatically add hot keys to menu pads (not bars) that do not currently have one assigned. This is useful if you sometimes forget to create hot keys for your menus.  By default, it uses the first letter of the Menu Pad.  If it is already being used by one of the other menu pads, it will proceed to the next letter, and so on.
 In the CONFIG.FP file, <cExpr1> can be either ON or OFF.
 When adding it to the Setup/Menu Procedure snippet,  <cExpr1> is ignored.  It is automatically turned on
+
 Called : Setup/Menu Procedure snippet
 	CONFIG.FP
 #### *:AUTOPOS / _AUTOPOS
 AUTOPOS will allow the user to click on the Line where the menu is to start on. This results in a *:LINE directive being added to the Setup/Menu Procedure snippet.
+
 Called : Setup/Menu Procedure snippet
 	CONFIG.FP
 First appeared : Version 1.1
 #### *:AUTORUN / _AUTORUN
 This directive will automatically run the generated MPR file once it has been generated.  This directive is ignored when building a menu within a project.
+
 Called : Setup/Menu Procedure snippet
 	CONFIG.FP
 #### *:BASEHDR <cProgFile> / _BASEHDR
@@ -188,6 +204,7 @@ First Appeared: Version 3.0
 #### *:FOUNDATION <cExpr> / _FOUNDATION
 FOUNDATION will place a READ VALID <cExpr> statement in your Cleanup snippet to assist in the creation of a FOUNDATION READ. If you do 	not provide a <cExpr>, the READ will automatically exit when the Prompt is either "EXIT" or "QUIT".
 
+
 Called : Setup/Menu Procedure snippet
 	CONFIG.FP
 First appeared : Version 1.1
@@ -196,11 +213,13 @@ First appeared : Version 1.1
 
 This directive allows you to define what GENMENU.PRG driver program to use.  This is helpful if you want to use a different menu generator for a particular menu.  The driver is defined in <cExpr1>.
 
+
 Called : Setup/Menu Procedure snippet
 	CONFIG.FP
 
 #### *:HIDE / _HIDE
 HIDE will hide the menu bar during the running of the MPR file and show it at the end. This is useful if you use a lot of *:IF statements and don't want the user to see a lot of menu activity.
+
 
 Called : Setup/Menu Procedure snippet
 	CONFIG.FP
@@ -209,18 +228,21 @@ First appeared : Version 1.1
 #### *:NOLOC / _NOLOC
 NOLOC will remove the LOCFILE statement that is automatically put into the MPR by GENMENU. 
 
+
 Called : Setup/Menu Procedure snippet
 	CONFIG.FP
 	First appeared : Version 3.0
 
 #### *:NOXTHERM | _NOXTHERM='ON'
 Tells GENMENUX to use FoxPro's standard thermometer instead of the GENMENUX Extended one. This is useful if you find the GENMENUX thermometer too distracting in your development environment.
+
 Called : Setup/Menu Procedure snippet
 	CONFIG.FP
 First appeared : Version 1.1
 
 #### *:REFPRG <cExpr> | _REFPRG <cExpr>
 Identifies the program that GENMENUX will create that refreshes any clauses that may change using the *:CASE or *:ARRAY functions. The “Refresh” program can be used to refresh the menu at any time without recalling the MPR file. This makes the entire update process much faster.
+
 Called :	Setup/Menu Procedure Snippet
 	CONFIG.FP
 
@@ -229,21 +251,25 @@ First Appeared: Version 2.0
 ####  *:SELECTBAR / _SELECTBAR
 Currently GENMENU places an ON BAR statement for activating popups. Using SELECTBAR will change the ON BAR statements to read ON SELECTION BAR which will change the behaviour of activating menu popups.	This works best when moving the popups in different locations on the screen.
 	
+
 Called : Setup/Menu Procedure snippet
 	CONFIG.FP
 
 #### *:SELECTPAD / _SELECTPAD
 Currently GENMENU places an ON PAD statement for activating popups. Using SELECTPAD will change the ON PAD statements to read ON SELECTION PAD which will change the behaviour of activating menus. This works best when moving the menus in different locations on the screen.
+
 Called : Setup/Menu Procedure snippet
 	CONFIG.FP
 
 #### *:SYSPOP / _SYSPOP
 SYSPOP is a directive that wraps the Procedure statement with PUSH MENU _MSYSMENU / SET SYSMENU OFF/POP MENU _MSYSMENU. It can be defined in either the CONFIG.FP, Setup or Procedure snippets.
+
 Called : Setup/Menu Procedure snippet
 	CONFIG.FP
 	Comment Snippet
 #### *:VERTICAL <nStartRow>,<nSkipRow> / _VERTICAL
 VERTICAL will cause the entire menu to be created vertically instead of horizontally.  You specify the starting row with nStartRow and define how many rows are between menus options using nSkipRow.
+
 Called : Setup/Menu Procedure snippet
 	CONFIG.FP
 #### *:AUTO_VER
@@ -263,13 +289,16 @@ Example: *:DEFCOMMAND_ALWAYS Do ChkComm WITH Prompt()
 First Appeared: Version 3.0 
 #### *:INSCX <cWinName>  [SAVE [MODAL]]
 INSCX will place a DO MENU.MPR in the SCX specified by cWinName. If there are no clauses, INSCX will place the statement at the bottom of the Screen Setup Code. If SAVE is specified, INSCX will place a PUSH MENU and POPMENU in the Setup and Cleanup code. If MODAL is also specified, INSCX will place the DO command in the When Clause for the screen and the POP MENU _MSYSMENU clause in the Deactivate snippet.
+
 Called : Setup/Menu Procedure snippet
 First appeared : Version 1.1
 #### *:LINE <val1>
 Allows the Menu bar to start at the Row defined by val1.  This can be used to force menus to start at a particular row instead of the default Row 0.
+
 Called : Setup/Menu Procedure snippet
 #### *:LOCATION <cExpr>,<cExpr2>
 LOCATION will update the location of the menu based on <cExpr>. cExpr can either be "REPLACE","APPEND","BEFORE", or "AFTER" (just like the Menu options.) If cExpr is BEFORE or AFTER, cExpr2 should contain either the system menu prompt or pad name that the menu is before. 
+
 Called : Setup/Menu Procedure snippet
 First appeared : Version 1.1
 #### *:MENUCOLOR <cExpr>
@@ -280,34 +309,44 @@ Called: Setup/Menu Procedure snippet
 First Appeared: Version 2.0
 #### *:MENUNAME <expr1>
 Renames the Menu bar from _MSYSMENU to expr1.  <expr1> does not have to be quotes as GENMENUX will strip any quote delimiters from expr1..
+
 Called : Setup/Menu Procedure snippet
 #### *:NOACT
 This directive removes the ACTIVATE MENU _MSYSMENU statement from the generated MPR file.
+
 Called : Setup/Menu Procedure snippet
 First Appeared : Version 1.1a
 #### *:NOAUTO
 This directive removes the SET SYSMENU AUTOMATIC statement from the generated MPR file.
+
 Called : Setup/Menu Procedure snippet
 #### *:NOBAR
 Removes the BAR setting from MPR file allowing for menus to be created that only are the length of the menu bar itself instead of extending across the screen.
+
 Called : Setup/Menu Procedure snippet
 #### *:NOGEN
 Directs GENMENUX to not generate the MPR file.
+
 Called : Setup/Menu Procedure snippet
 #### *:NOMARGIN
 Removes MARGIN setting from MPR file allowing for menus to be created as shown.
+
 Called : Setup/Menu Procedure snippet
 #### *:NOSHADOW
 Removes SHADOW setting from MPR file allowing for menus to be created as shown.
+
 Called : Setup/Menu Procedure snippet
 #### *:NOXGEN
 Directs GENMENUX to ignore any GENMENUX directives and generate the MPR file as though GENMENUX were not present.
+
 Called : Setup/Menu Procedure snippet
 #### *:PADCOLOR <cExpr1>
 Changes the default Menu PAD Color setting.  Normally, GENMENU defaults to COLOR SCHEME 4.  Using PADCOLOR, the default scheme can be changed to any particular setting.
+
 Called : Setup/Menu Procedure snippet
 #### *:POPCOLOR <cExpr1>
 Changes the default Menu Popup Color setting.  Normally, GENMENU defaults to COLOR SCHEME 3.  Using POPCOLOR, the default scheme can be changed to any particular setting.
+
 Called : Setup/Menu Procedure snippet
 #### *:SKIP_AUTO
 Tells GENMENUX to put a “DO <cSkipProg>“ in the Cleanup code so it can run the SKIP_REDIRECT program automatically.
@@ -315,9 +354,11 @@ Tells GENMENUX to put a “DO <cSkipProg>“ in the Cleanup code so it can run t
 Called: Setup/Menu Procedure Snippet
 #### *:SKIP_REDIRECT <cSkipProg>
 Moves all of the SKIP statements in the menu into a program specified by <cSkipProg>. This allows the calling of this program at any time in the program without having to rerun an MPR file.
+
 Called : Setup/Menu Procedure snippet
 #### *:SYSDEFAULT
 Adds the statement "SET SYSMENU SAVE" to the Clean up code.  This makes the menu become the default (SET SYSMENU TO DEFAULT) after it has been created.
+
 Called : Setup/Menu Procedure snippet
 #### *:WINDOW <cExpr1> [CLAUSES <cExpr2>]
 Adds the line IN WINDOW <expr1> command to the MPR file.  This allows you to create menus within your own user-defined windows.  When using WINDOW, be sure to DEFINE the window before running the MPR file. If not,  the MPR file will simply use the regular FoxPro desktop to place the menu.
@@ -326,6 +367,7 @@ If you use the CLAUSES command, WINDOW will automatically create a window named 
 *:WINDOW works well under DOS to create MDI-style applications.  You can simply add *:WINDOW to your setup code and it will work fine.
 
 Example : *:WINDOW w_temp CLAUSES FROM 5,5 TO 12,50 COLOR SCHEME 6
+
 Called : Setup/Menu Procedure snippet
 #### *:XPLATKEYS
 Sets up the menu to provide support for multiplatform hotkeys that may be different. This tells GENMENUX to support the directives *:KEYWIN, *:KEYMAC, *:KEYDOS and *:KEYUNIX to hold onto different key labels for the code.
@@ -337,6 +379,7 @@ Called: Setup/Menu Procedure snippet
 First Appeared: Version 3.0
 #### *:BARHOT
 BARHOT will create hot keys for all menu bar items in the same way AUTOHOT creates hot keys for Menu Pads. This directive can only be called in the Comment snippet. However, if it is called at the top pad of a menu, all of the items in the submenu will be updated accordingly.
+
 Called : Setup/Menu Procedure Snippet
 	Comment snippet
 First appeared : Version 1.1
@@ -350,6 +393,7 @@ Called:	Comment Snippet
 First Appeared: Version 2.0
 #### *:ARRAY <cArray>
 Adds a loop for a popup that allows the BARS of the popup to be defined based on the array <cArray>. If the Array is two dimensional, the ON SELECT BAR statement calls the command identified in the second column of the array.
+
 Called : Comment snippet
 Example : *:ARRAY a_fldNames
 First appeared : Version 1.1
@@ -364,6 +408,7 @@ First Appeared: Version 2.0
 This directive allows menu items to appear based on the condition defined in <cexpr1>.  This condition is evaluated at runtime, allowing menu items to completely disappear when not being used (as opposed to being greyed out).  What it does is add a CASE statement in the Cleanup code that RELEASEs menu pads that do not meet the condition specified. 
 CASE is useful for menu conditions that are repeated throughout the MPR file such as platform specific options (*:CASE _DOS, *:CASE _WINDOWS) or developer options (*:CASE glDeveloper), etc.
 The CASE directive does not support the IF Keywords.
+
 Called : Comment snippet
 Example : *:CASE _DOS
 First appeared : Version 2.0
@@ -371,6 +416,7 @@ First appeared : Version 2.0
 
 #### *:CLAUSE <cClauses>
 CLAUSE will add any additional clauses that are needed to the BAR or PAD definition. This allows users to identify any new items that are added to the DEFINE BAR statement.
+
 Called : Comment snippet
 
 First Appeared: Version 3.0
@@ -396,6 +442,7 @@ Violet
 Yellow
 Dark Grey
 
+
 Called : Comment snippet
 Example : *:COLOR R/W,RB/B
 		*:COLOR Red
@@ -403,21 +450,25 @@ First appeared : Version 1.1
 
 #### *:COLORSET <cExpr>
 ColorSET allows you to define a color scheme for an individual menu pad or item. This allows individual items to use different schemes.
+
 Called : Comment snippet
 Example : *:COLORSET 7
 First appeared : Version 1.1
 	
 #### *:DEFPOPIF <cExpr>
 DEFPOPIF will make the actual DEFINE POPUP statement conditional on whether or not it already exists. The DEFINE POPUP statement is rather slow so this directive will place an IF...ENDIF statement around the popup definition for cExpr so the definition is conditional, making the MPR run faster.
+
 Called : Comment snippet
 Example : *:POPDEFIF options
 First appeared : Version 1.1
 
 #### *:DELETE
 Deletes menu prompt during compilation so it doesn't appear under menu. This directive is useful for adding features at a later date and ensuring they don't appear in the menu.
+
 Called : Comment snippet
 #### *:DELOBJ
 DELOBJ will remove a menu item after GENMENUX has completed directive processing but BEFORE it reorders the menu.
+
 Called : Comment snippet
 First appeared : Version 1.1
 #### *:FONT <cFontName> [csize...]
@@ -425,10 +476,12 @@ FONT will allow you to specify a font name for a particular menu pad. You can ad
 The FONT Directive only works with Visual FoxPro 3.0.
 Example: *:FONT “Arial”,12
 	   *:FONT “Arial”,10 STYLE “B”
+
 Called : Comment snippet
 		First appeared : Version 3.0
 #### *:GENIF <cexpr1>
 This directive allows menu items to be defined during MPR generation based on the condition defined in <cexpr1>.	If the condition specified in cExpr1 is not met when the MPR file is being generated,  GENMENUX will remove the PAD or BAR from the menu.
+
 Called : Comment snippet
 Example :
 	*:GENIF "DEV"$CURDIR()
@@ -442,6 +495,7 @@ The valid keywords are :
 	*ITEMNUM*	- Returns Item Number of Menu Object
 	*LEVEL*	- Returns Level Name of Menu Object
 	*NAME*	- Returns Pad Name of Menu Object
+
 Called : Comment snippet
 Example :
 	*:IF sec_level='*'
@@ -449,6 +503,7 @@ Example :
 	*:IF chk_sec("*PROMPT*","*ITEMNUM*")
 #### *:IGNORE
 Ignore any GENMENUX directives for this menu prompt.
+
 Called : Comment snippet
 #### *:KEY<<platform>  <cKeyLabel>
 The directives *:KEYWIN, *:KEYUNIX, *:KEYMAC, *:KEYDOS allow the menu to define separate key labels for each platform.
@@ -464,15 +519,18 @@ Called: Comment snippet
 First Appeared: Version 3.0
 #### *:MESSAGE <cexpr1>
 Adds a message prompt as defined by <cexpr1>.  <cExpr1> may be a function or string. If it is a string, it should be enclosed in Quotes.  In FoxPro for Windows, *:MESSAGE overrides what is in the Message clause.
+
 Called : Comment snippet
 #### *:PADNAME <cExpr>
 Ensures that the current pad's name is <cExpr>. 
+
 Called : Comment snippet
 Example : *:PADNAME options
 First appeared : Version 1.1
 	
 #### *:PADPOS | POPPOS <nRow>,<nCol>
 PADPOS and POPPOS will place the PAD or Popup at the Row and Column specified by nRow and nCol. This is useful for moving your menu around the screen in different locations for your various popups. POPPOS must occur within a Submenu.
+
 Called : Comment snippet
 Example : *:PADPOS 5,6	(This will position the pad at row 5, column 6)
 First appeared : Version 1.1
@@ -480,38 +538,45 @@ First appeared : Version 1.1
 This directive identifies the action taken when a file has been chosen from a popup created with POPFILES or POPFIELDS.  <cExpr1> must be a valid FoxPro function or command.
 Example : *:POPCOMMAND DO deaPop WITH PROMPT()
 	*:POPCOMMAND WAIT WINDOW "You chose "+PROMPT()
+
 Called : Comment snippet
 #### *:POPFIELD <cExpr1>
 This directive allows you to create menus that offer popups of specific fields in the current table.  The popup will show the field <cExpr1> for all records from the current table.  In order to have something happen when a file is selected from the popup, you must use the directive *:POPCOMMAND.
 Example : *:POPFIELD name
 	*:POPFIELD "Client Name : "+name
+
 Called : Comment snippet
 
 #### *:POPFILES <cExpr1>
 This directive allows you to create menus that offer popups of specific files. The popup will show all files matching the skeleton in <cExpr1>.  In order to have something happen when a file is selected from the popup, you must use the directive *:POPCOMMAND.  Place this directive in the Comment snippet of the first menu bar where you want the popup to be.  For example, if you want a popup to appear under the File Open menu, add a submenu to the Open option and the first bar, add the POPFILES directive to the comment snippet.
 Example : *:POPFILES *.PJX
 	*:POPFILES "*.DBF"
+
 Called : Comment snippet
 #### *:POPNAME <cExpr>
 Ensures that the current popup's name is <cExpr>. If POPNAME is called on a System Level Pad, it changes the popup of the menu below it.
+
 Called : Comment snippet
 Example : *:POPNAME Options
 First appeared : Version 1.1
 	
 #### *:POPPRECOMMAND <cExpr>
 Allows for a command or function to be called BEFORE a Popup is defined. This currently only works when using POPFILES or POPFIELD. This allows you to open up a table to use the POPFIELD directive with more easily. You are responsible for closing any opened tables.
+
 Called : Comment snippet
 Example : *:POPPRECOMMAND =OPENFILE("CLIENTS")
 First appeared : Version 1.1
 	
 #### *:POPTITLE <cExpr>
 POPTITLE will define the popup in which the directive is called with a title of <cExpr>. This is kind of handy if you want to have titles on any of your popups.
+
 Called : Comment snippet
 Example : *:POPTITLE "Menu Options"
 First appeared : Version 1.1
 #### *:PREDEF <cExpr>
 PREDEF will place the <cExpr> clause one line before the DEFINE BAR or DEFINE PAD statement is called. This allows you to place variables into the prompts of the code.
 The PREDEF statement is evaluated twice: once right after the first MNX driver is called and once right before GENMENU is called. This allows menu libraries to also use the PREDEF command.
+
 Called : Comment snippet
 Example : *:PREDEF lcKey = GETKEY (“Hello”)
 would result in the statement appearing before the current item is defined in the MPR.
@@ -519,6 +584,7 @@ First appeared : Version 3.0
 
 #### *:TRNTXT <cExpr>||<cExpr2>
 Replaces all occurrences of <cExpr> with <cExpr2> in the procedure snippet.	
+
 Called : Comment snippet
 Example : *:TRNTXT "Client"||"Bad Guys"
 First appeared : Version 1.1
@@ -539,6 +605,7 @@ the following WAIT window would appear at compile time of the screen:
 If the following command was in the Setup/Menu Procedure snippet:
 {{&.DO MYPROG}}
 then a program called MYPROG would be executed as a subroutine at compile time of the screen.  If the program was to return a character string for code insertion, then {{MYPROG()}} would have been used.
+
 Called : Anywhere
 
 Notes for FoxPro Windows
