@@ -19,77 +19,106 @@ It enhances the FoxPro Menu Builder with the following features :
 *	ability to define Menu Templates that contain standard menu objects that can be inserted at any time into an existing menu.
 Technically, these generators copy a screen or menu and make modifications to the copy prior to building. This way, the original screen remains the same.  For more information on GENSCRNX and the entire concept behind the "X" series, see the documentation for GENSCRNX.
 As with GENSCRNX, GENMENUX has been placed in the Public Domain.
+
 Calling GENMENUX directives
+
 GENMENUX directives may be called in four different locations :
+
 CONFIG.FP/CONFIG.FPW
 The CONFIG.FP is the startup configuration file that FoxPro uses. In order to use GENMENUX at all, you must specify it as the replacement for GENMENU with the following line :
+
 _GENMENU="GENMENUX.PRG"
 If you have added FoxPro into your DOS path, you should put the entire path into the GENMENUX line.
+
 Setup// Menu Procedure Snippet
+
 Any Setup directives may be called from either the Setup snippet or the Menu Procedure snippet. You can access the Menu Procedure snippet easier than the Setup snippet as it is immediately visible when choosing Menu options from the Menu pad.
+
 Comment Snippet
+
 The comment snippet is available by selecting Options for any particular menu.
+
 Technical Note - Reordering Menus
+
 When you create a menu using the Menu Builder,  FoxPro carefully constructs the MNX file in a particular manner.  When adding and removing menu items directly into the MNX file,  it is crucial that the order and content of the MNX file is maintained.  For example,  FoxPro maintains the number of menu items for each menu pad and bar in the MNX file.  If you remove one of the items without updating the number of items,  GENMENU builds an invalid MPR file.  
+
 To reduce this from happening, GENMENUX reorders the menu after processing the majority of its directives and running MNXDRV1 and MNXDRV2.  This allows users to create their own drivers that add and remove menu pads and bars without worrying about messing up the order of the MNX file.  If you design such a driver, it is important that you call it in either MNXDRV1 or MNXDRV2.  If you remove menu pads in MNXDRV3 or later,  you will corrupt the MNX file and the MPR file will be unusable. 
+
 Technical Note - Menu Templates
+
 With the release of version 1.1, GENMENUX offers the concept of Menu Templates or Libraries, similar to the screen libraries offered with GENSCRNX.
 GENMENUX Directives
 (Some directives may be identified in more than one place.  At the end of each directive description, these places are identified. The directives are ordered by where they may be called.)
 
-GENMENUX Drivers
+### GENMENUX Drivers
+
 GENMENUX will allow for menu drivers to be called.  A menu driver is a program or procedure that is run through the temporary menu or generated MPR file making changes.  This happens at different times throughout the menu generation procedure.  To identify a driver, place the required driver directive in the Setup/Menu Procedure snippet of the menu and GENMENUX will call the procedure after it has completed its changed.
 The driver specified by any of the DRV directives does not have to be highlighted in Quotes. In fact, GENMENUX will strip the quotes if there are any.  In addition, if you do not put an extension on the driver, GENMENUX will look for a driver with a PRG extension to run.
 Since drivers do very similar things but at different places, there is a description at the end of this document that explains what happens when as far as drivers go.
 You may call as many drivers as desired within the Setup or Procedure snippets. Within the CONFIG.FP, GENMENUX will only accept the first driver listed for a particular leve.
-*:MNXDRV0 <expr1>
+
+#### *:MNXDRV0 <expr1>
 Calls a GENMENUX Driver that attaches itself to the user’s GENMENU temporarily. This allows the driver to contain modified GENMENU procedures that provide additional functionality where GENMENU does not. This driver should only contain procedure and function statements and should expect a clean (ie empty) environment when being called. 
 Called : Setup/Menu Procedure snippet
 
-*:MNXDRV1 <expr1> / _MNXDRV1
+#### *:MNXDRV1 <expr1> / _MNXDRV1
+
 Calls a GENMENUX Driver before Standard GENMENUX processing has been completed.  This driver must be a complete driver in the sense that when it starts, the menu MNX file is open and at the first record.
 Called : Setup/Menu Procedure snippet
 	CONFIG.FP
-*:MNXDRV2 <expr1> / _MNXDRV2
+
+#### *:MNXDRV2 <expr1> / _MNXDRV2
+
 Calls a GENMENUX Driver after Standard GENMENUX processing has been completed. This driver can be considered a Line driver i.e. it can simply be a one line command. It is processed through each record of the menu file from within a SCAN statement.
 Called : Setup/Menu Procedure snippet
 	CONFIG.FP
-*:MNXDRV3 <expr1> / _MNXDRV3
+
+#### *:MNXDRV3 <expr1> / _MNXDRV3
+
 Calls a GENMENUX Driver after Standard GENMENUX processing and Menu re-ordering has been completed.  This driver can be considered a Line driver i.e. it can simply be a one line command. It is processed through each record of the menu file from within a SCAN statement.
 DO NOT DELETE ANY RECORDS IN THE MNX File as your menu file will be corrupted. Use MNXDRV2 if you want to do that.
 Called : Setup/Menu Procedure snippet
 	CONFIG.FP
-*:MNXDRV4 <expr1> / _MNXDRV4
+
+#### *:MNXDRV4 <expr1> / _MNXDRV4
+
 Calls a GENMENUX Driver before the Standard GENMENU is Called. This driver must be a complete driver in the sense that when it starts, the menu MNX file is open and at the first record.
 Called : Setup/Menu Procedure snippet
 	CONFIG.FP
-*:MNXDRV5 <expr1> / _MNDRV5
+
+#### *:MNXDRV5 <expr1> / _MNDRV5
+
 Calls a GENMENUX Driver that completely REPLACES the standard FoxPro GENMENU.  This driver must be a complete driver in the sense that when it starts, the menu MNX file is open and at the first record.  Whatever gets created here should be placed in the MPR file.
 The MNXDRV5 driver is passed the same two parameters as the regular GENMENU.
 The MNXDRV5 directive is identical to the GENMENUX directive and will override the setting of the GENMENUX driver, if used.
 Called : Setup/Menu Procedure snippet
 	CONFIG.FP
-*:MPRDRV1 <expr1> / _MPRDRV1
+
+#### *:MPRDRV1 <expr1> / _MPRDRV1
 Calls a GENMENUX Driver that will update the SPR file within the temporary project file.  This driver must be a complete driver in the sense that when it starts, the just created MPR file is in the Memo field named OBJECT  A driver here might completely replace the MPR with a different program like a pre-created menu file.
 Called : Setup/Menu Procedure snippet
 	CONFIG.FP
-*:MPRDRV2 <expr1> / _MPRDRV2
+
+#### *:MPRDRV2 <expr1> / _MPRDRV2
 Calls a GENMENUX Driver that will update the SPR file within the temporary project file.  This driver must be a complete driver in the sense that when it starts, the just created MPR file is in the Memo field named OBJECT  A driver here might completely replace the MPR with a different program like a pre-created menu file.
 The MPRDRV2 driver is called as the very last item in GENMENUX before the removal of the temporary project files.  There is no additional GENMENUX processing except for directives that run the menu or another program after completion.
 Called : Setup/Menu Procedure snippet
 	CONFIG.FP
 
-GENMENUX Template or Library Directives
+### GENMENUX Template or Library Directives
 Starting with Version 1.1, GENMENUX allows a menu template or library to be created. A library allows for standard menu options to be once and placed into any menu during menu generation. For example, if every custom application you build uses a Special menu pad that contains items such as Help, About, System Information, then when you design a menu, you have to add these items in every time.  By defining the Special menu pad in a Menu Library, you can call this menu pad and it will be added to any menu automatically. A library is contained in a template file. This file is referenced by FOXMNX. Libraries have objects within them. The Special menu, mentioned above, may be in a library called STANDARD and referenced as an object called SPECIAL. This library may be created and referenced using the commands below. 
-*:FOXMNX <cFileName> / _FOXMNX
+
+#### *:FOXMNX <cFileName> / _FOXMNX
 In order for a menu library to exist, the library file must be created using the FOXMNX directive. This directive may define a library table in every application directory or it may reference a single one for different applications. The table created will have the identical structure to an MNX file with some additional fields that identify the library and objects within.
 Called : Setup/Menu Procedure snippet
 	CONFIG.FP
-*:DEFLIB <cLibrary>
+
+#### *:DEFLIB <cLibrary>
 Since every object must belong to a library, DEFLIB allows you to define the library for an entire menu. This is useful if you create a single menu that contains all of your library objects and want to place each object into a single library.
 Called :	Setup/Menu Procedure snippet
 	CONFIG.FP
-*:DEFOBJ [<cLibrary>.]<cObject>
+
+#### *:DEFOBJ [<cLibrary>.]<cObject>
 To define a library object, place the DEFOBJ directive in the comment field for the menu pad, submenu or procedure to be defined. The object will be inserted into the FOXMNX table as belonging to the library specified by cLibrary. If cLibrary is not specified, then the library will be the one identified by the DEFLIB directive.
 Called :	Comment snippet
 
@@ -97,65 +126,80 @@ Called :	Comment snippet
 
 In the CONFIG.FP, specify the template file with the command :
 _FOXMNX='FOXMNX.DBF'
+
 This identifies the FOXMNX table as the container for any libraries.
+
 In addition, specify the default library for any menu objects to belong to with the line :
 _DEFLIB="TOOLS"
+
 This identifies any objects in the menu as belonging to the Tools library.
 On any menu pad, submenu, command or procedure that should be defined in the Library, add the DEFOBJ directive in the Comment snippet. If the About... menu pad contains a procedure that is the same between different applications, add the following line to the Comment snippet :
+
 *:DEFOBJ About
+
 This inserts a menu object into the FOXMNX table for the About menu pad, identifying it as belonging to the Tools library and naming the object About.
-If the File Reindex menu pad contains a procedure that is the same between different applications but you want to place it in the File library, add the following line to the Comment snippet :
+If the File Reindex menu pad contains a procedure that is the same between different applications but you want to place it in the File library, add the following line to the 
+Comment snippet :
+
 *:DEFOBJ FILE.REINDEX.
+
 This inserts a menu object into the FOXMNX table for the Reindex menu pad, identifying it as belonging to the File library and naming the object Reindex.
-Referencing Library Objects
+#### Referencing Library Objects
+
 *:INCLIB
 To define the default library for referencing library objects, place the INCLIB directive in the Setup or Menu Procedure snippet of the menu.
 *:INSOBJ <cLibrary>.<cObject>
 To reference a library object and have it replace a menu option in a menu, place the INSOBJ directive in the comment field for the menu pad, submenu or procedure to be replaced. The object will be replaced by the object <cObject> from the FOXMNX table belonging to the library specified by cLibrary. If cLibrary is not specified, then the library will be the one identified by the INCLIB directive.
 Called :	Comment snippet
 
-GENMENUX General Directives
-*:AUTOACT / _AUTOACT
+### GENMENUX General Directives
+#### *:AUTOACT / _AUTOACT
 AUTOACT will automatically Activate the menu in the Cleanup snippet. This is useful if you use the MENUNAME directive and do not place the ACTIVATE MENU clause in your code.
 Called : Setup/Menu Procedure snippet
 	CONFIG.FP
 First appeared : Version 1.1
 
-*:AUTOHOT / _AUTOHOT <cexpr1>
+#### *:AUTOHOT / _AUTOHOT <cexpr1>
 This directive will automatically add hot keys to menu pads (not bars) that do not currently have one assigned. This is useful if you sometimes forget to create hot keys for your menus.  By default, it uses the first letter of the Menu Pad.  If it is already being used by one of the other menu pads, it will proceed to the next letter, and so on.
 In the CONFIG.FP file, <cExpr1> can be either ON or OFF.
 When adding it to the Setup/Menu Procedure snippet,  <cExpr1> is ignored.  It is automatically turned on
 Called : Setup/Menu Procedure snippet
 	CONFIG.FP
-*:AUTOPOS / _AUTOPOS
+#### *:AUTOPOS / _AUTOPOS
 AUTOPOS will allow the user to click on the Line where the menu is to start on. This results in a *:LINE directive being added to the Setup/Menu Procedure snippet.
 Called : Setup/Menu Procedure snippet
 	CONFIG.FP
 First appeared : Version 1.1
-*:AUTORUN / _AUTORUN
+#### *:AUTORUN / _AUTORUN
 This directive will automatically run the generated MPR file once it has been generated.  This directive is ignored when building a menu within a project.
 Called : Setup/Menu Procedure snippet
 	CONFIG.FP
-*:BASEHDR <cProgFile> / _BASEHDR
+#### *:BASEHDR <cProgFile> / _BASEHDR
 This directive will place the <cProgFile> into the Setup snippet of the Menu before the rest of GENMENUX is run, so you are able to load standard drivers and directives.
+
 Called: Setup/Menu Procedure Snippet
 	CONFIG.FP
+
 First Appeared: Version 3.0
-*:FOUNDATION <cExpr> / _FOUNDATION
+#### *:FOUNDATION <cExpr> / _FOUNDATION
 FOUNDATION will place a READ VALID <cExpr> statement in your Cleanup snippet to assist in the creation of a FOUNDATION READ. If you do 	not provide a <cExpr>, the READ will automatically exit when the Prompt is either "EXIT" or "QUIT".
+
 Called : Setup/Menu Procedure snippet
 	CONFIG.FP
 First appeared : Version 1.1
 
 *:GENMENUX <cExpr1>
+
 This directive allows you to define what GENMENU.PRG driver program to use.  This is helpful if you want to use a different menu generator for a particular menu.  The driver is defined in <cExpr1>.
 Called : Setup/Menu Procedure snippet
 	CONFIG.FP
+
 *:HIDE / _HIDE
 HIDE will hide the menu bar during the running of the MPR file and show it at the end. This is useful if you use a lot of *:IF statements and don't want the user to see a lot of menu activity.
 Called : Setup/Menu Procedure snippet
 	CONFIG.FP
 First appeared : Version 1.1
+
 *:NOLOC / _NOLOC
 NOLOC will remove the LOCFILE statement that is automatically put into the MPR by GENMENU. 
 Called : Setup/Menu Procedure snippet
